@@ -1,5 +1,7 @@
-build
+build*
 .cache
 .vscode
 .idea
 config.json
+portaudio-win/
+raylib-win/
