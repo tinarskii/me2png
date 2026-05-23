@@ -20,6 +20,7 @@ CHANGELOG  include/  lib/  LICENSE  README.md
 ```
 
 ```sh
+$ ls portaudio-win/
 mingw64/
 ```
 
