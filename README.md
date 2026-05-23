@@ -7,8 +7,8 @@ A cross-platform, lightweight, and simple program for PNGtubing. Written in C++ 
 ## Building for Windows
 
 - Download development tools: `sudo dnf install mingw64-gcc-c++ mingw64-winpthreads-static`
-- Download raylib 6.0 for mingw-w64: (SourceForge Download (.zip))[https://sourceforge.net/projects/raylib.mirror/files/6.0/raylib-6.0_win64_mingw-w64.zip/download]
-- Download PortAudio for mingw-w64: [Download (.tar.zst)] (https://mirror.msys2.org/mingw/sources/mingw-w64-portaudio-1~19.7.0-4.src.tar.zst)
+- Download raylib 6.0 for mingw-w64: [SourceForge Download (.zip)](https://sourceforge.net/projects/raylib.mirror/files/6.0/raylib-6.0_win64_mingw-w64.zip/download)
+- Download PortAudio for mingw-w64: [Download (.tar.zst)](https://mirror.msys2.org/mingw/sources/mingw-w64-portaudio-1~19.7.0-4.src.tar.zst)
 - In project, unzip raylib to raylib-win/
 - In project, extract portaudio to portaudio-win
 
