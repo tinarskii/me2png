@@ -62,7 +62,7 @@ cmake --build build-win
 
 - Download raylib and portaudio: `sudo dnf install raylib-devel portaudio-devel`
 - Build: `cmake --build build`
-- 
+
 ## Credits
 
 Default Reg avatar drawn by [Becbec999](https://lit.link/en/honeytea999)
