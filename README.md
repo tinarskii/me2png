@@ -7,7 +7,8 @@ A cross-platform, lightweight, and simple program for PNGtubing. Written in C++ 
 ## Installation
 
 - Windows: [Release Page](https://github.com/tinarskii/me2png/releases)
-- Fedora Linux: `sudo dnf copr enable tinvv/me2png` then `sudo dnf install me2png`
+- Fedora Linux: `sudo dnf copr enable tinvv/me2png`, then `sudo dnf install me2png`
+- Arch Linux: `yay -S me2png`, or `paru -S me2png`
 - MacOS / Other Linux Distros: [Release Page](https://github.com/tinarskii/me2png/releases)
 
 ## Usage
