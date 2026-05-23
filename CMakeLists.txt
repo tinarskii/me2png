@@ -34,6 +34,10 @@ add_executable(
   src/Microphone.cpp
 )
 
+target_compile_definitions(me2png PRIVATE 
+  DATADIR="${CMAKE_INSTALL_PREFIX}/share/me2png"
+)
+
 if(WIN32)
   target_link_libraries(me2png raylib ${PORTAUDIO_LIBRARY}
     opengl32 gdi32 winmm ole32 setupapi)
@@ -43,3 +47,6 @@ endif()
 
 target_include_directories(me2png PRIVATE ${PORTAUDIO_INCLUDE_DIR})
 install(TARGETS me2png DESTINATION bin)
+install(DIRECTORY assets/ DESTINATION share/me2png/assets)
+install(FILES me2png.desktop DESTINATION share/applications)
+install(FILES assets/icon.png DESTINATION share/icons/hicolor/64x64/apps RENAME me2png.png)

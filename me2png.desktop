@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Me2png
+Comment=A cross-platform, lightweight, and simple program for PNGtubing.
+Exec=me2png
+Icon=me2png
+Terminal=false
+Type=Application
+Categories=Utility;

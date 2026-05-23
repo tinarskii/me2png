@@ -203,12 +203,11 @@ std::string EscapeJsonString(const char *value) {
 
 AppConfig DefaultConfig() {
   AppConfig config;
-  std::snprintf(config.images.idle, kPathMax, "%s", "./assets/idle.png");
-  std::snprintf(config.images.talk, kPathMax, "%s", "./assets/talk.png");
-  std::snprintf(config.images.blinkIdle, kPathMax, "%s",
-                "./assets/blink-idle.png");
-  std::snprintf(config.images.blinkTalk, kPathMax, "%s",
-                "./assets/blink-talk.png");
+  const char *dataDir = DATADIR;
+  std::snprintf(config.images.idle, kPathMax, "%s/assets/idle.png", dataDir);
+  std::snprintf(config.images.talk, kPathMax, "%s/assets/talk.png", dataDir);
+  std::snprintf(config.images.blinkIdle, kPathMax, "%s/assets/blink-idle.png", dataDir);
+  std::snprintf(config.images.blinkTalk, kPathMax, "%s/assets/blink-talk.png", dataDir);
   return config;
 }
 
