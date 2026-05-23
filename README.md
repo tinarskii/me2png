@@ -29,10 +29,10 @@ In OBS, this can be done by right clicking the Window Capture source, then selec
 
 - Download development tools: `sudo dnf install mingw64-gcc-c++ mingw64-winpthreads-static`
 - Download raylib 6.0 for mingw-w64: [SourceForge Download (.zip)](https://sourceforge.net/projects/raylib.mirror/files/6.0/raylib-6.0_win64_mingw-w64.zip/download)
-- Download PortAudio for mingw-w64: [Download (.tar.zst)](https://mirror.msys2.org/mingw/sources/mingw-w64-portaudio-1~19.7.0-4.src.tar.zst)
+- Download PortAudio for mingw-w64: [Download (.pkg.tar.zst)](https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-portaudio-1~19.7.0-4-any.pkg.tar.zst)
 - In project, unzip raylib to raylib-win/
 - In project, extract portaudio to portaudio-win
-
+ 
 It should look like this:
 
 ```sh
@@ -54,6 +54,15 @@ cmake -DCMAKE_TOOLCHAIN_FILE=mingw64.cmake \
 cmake --build build-win
 ```
 
+- After building, copy required DLLs next to the exe:
+  - `raylib-win/lib/raylib.dll`
+  - `portaudio-win/mingw64/bin/libportaudio.dll`
+
+## Building for Linux
+
+- Download raylib and portaudio: `sudo dnf install raylib-devel portaudio-devel`
+- Build: `cmake --build build`
+- 
 ## Credits
 
 Default Reg avatar drawn by [Becbec999](https://lit.link/en/honeytea999)
