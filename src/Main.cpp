@@ -28,7 +28,7 @@ int main(void) {
   // -- Window Config --
   SetTraceLogLevel(LOG_ERROR);
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(1280, 720, "Raylib");
+  InitWindow(1280, 720, "Me2PNG v0.1.0");
   SetTargetFPS(144);
 
   // -- Avatar Setup --
