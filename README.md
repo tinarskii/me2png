@@ -4,6 +4,12 @@ A cross-platform, lightweight, and simple program for PNGtubing. Written in C++ 
 
 <img width="1920" height="1045" alt="image" src="https://github.com/user-attachments/assets/a0b70d1a-7962-43ee-a8e4-be2c0974b7c3" />
 
+## Installation
+
+- Windows: [Release Page](https://github.com/tinarskii/me2png/releases)
+- Fedora Linux: `sudo dnf copr enable tinvv/me2png` then `sudo dnf install me2png`
+- MacOS / Other Linux Distros: [Release Page](https://github.com/tinarskii/me2png/releases)
+
 ## Building for Windows
 
 - Download development tools: `sudo dnf install mingw64-gcc-c++ mingw64-winpthreads-static`
