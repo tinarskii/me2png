@@ -99,6 +99,8 @@ int main(void) {
                                                  config.animationTalkShakeAmpY};
   bool configDirty = false;
 
+  GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
+
   // -- Clamp values --
   rmsThreshold = std::clamp(rmsThreshold, thresholdMin, thresholdMax);
   idleAnimationIndex = std::clamp(idleAnimationIndex, 0, 2);
