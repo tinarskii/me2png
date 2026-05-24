@@ -6,7 +6,11 @@ features you don't need, just download, run, select your mic and avatar, and you
 But if you need that overly complex feature,
 or want to improve its UI, or increasing your GitHub karma, you sure can contribute to this project! +1 byte contributions are welcome too.
 
-<img width="1920" height="1045" alt="image" src="https://github.com/user-attachments/assets/a0b70d1a-7962-43ee-a8e4-be2c0974b7c3" />
+<img width="1920" height="1045" alt="image" src="./assets/Me2PNG.png" />
+
+<a href="https://tinarskii.itch.io/me2png">
+<img width="auto" height="64" alt="image" src="https://github.com/user-attachments/assets/82f6a1a9-3631-488c-ad66-84bc70e8e0a8" />
+</a>
 
 ## Table of Contents
 
@@ -60,7 +64,8 @@ Otherwise, you can build it by yourself. See [CMakeLists.txt](https://github.com
 ## Usage
 
 #### Config Menu
-Hover to the **top-left side** for config menu. You can change the idle/talk/blink images, microphone input, and other settings there. 
+Navigate to the **top-left side** for config menu. You can change the idle/talk/blink images, microphone input, and other settings there. The config icon will automatically disappear when
+you switch to other window. 
 
 #### Integrating with Streaming Software
 For integrating into your preferred streaming software, you can directly capture this window,
