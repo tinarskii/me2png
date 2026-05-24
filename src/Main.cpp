@@ -587,8 +587,7 @@ int main(void) {
         currentMode = SpriteMode::None;
       }
     } else {
-      Rectangle hoverZone = {0.0f, 0.0f, 24.0f, (float)GetScreenHeight()};
-      if (CheckCollisionPointRec(GetMousePosition(), hoverZone)) {
+      if (IsWindowFocused()) {
         Rectangle showButtonRect = {4.0f, 4.0f, 24.0f, 24.0f};
         if (GuiButton(showButtonRect, GuiIconText(ICON_GEAR, ""))) {
           configVisible = true;
