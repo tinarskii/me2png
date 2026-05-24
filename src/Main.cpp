@@ -32,6 +32,8 @@ int main(void) {
   SetTargetFPS(60);
   // GuiSetStyle(DEFAULT, TEXT_SIZE, 12);
   // GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(RED));
+  Font customFont = LoadFont("assets/DynaPuff.ttf");
+  GuiSetFont(customFont);
 
   // -- Avatar Setup --
   Avatar avatar;
@@ -559,11 +561,11 @@ int main(void) {
       drawSection("Application");
       Rectangle fontSizeRect = drawLabeled("Font Size (px)", rowHeight);
       float prevFontSize = applicationFontSize;
-      GuiSliderBar(fontSizeRect, "", TextFormat("%d", applicationFontSize),
+      GuiSliderBar(fontSizeRect, "", TextFormat("%.2f", applicationFontSize),
                    &applicationFontSize, 8.0f, 32.0f);
       if (applicationFontSize != prevFontSize) {
         config.applicationFontSize = applicationFontSize;
-        GuiSetStyle(DEFAULT, TEXT_SIZE, applicationFontSize);
+        GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
         configDirty = true;
       }
 
