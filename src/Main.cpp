@@ -311,7 +311,7 @@ int main(void) {
       int scrollbarWidth = GuiGetStyle(LISTVIEW, SCROLLBAR_WIDTH);
       int scrollbarPad = GuiGetStyle(SCROLLBAR, SCROLL_PADDING);
       float controlWidth =
-          std::max(80.0f, contentWidth - labelWidth - 20.0f -
+          std::max(80.0f, contentWidth - labelWidth - 50.0f -
                               (float)scrollbarWidth - (float)scrollbarPad);
 
       auto nextRow = [&](float height) {
