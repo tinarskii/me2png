@@ -30,6 +30,8 @@ int main(void) {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(1280, 720, "Me2PNG v0.2.0");
   SetTargetFPS(60);
+  // GuiSetStyle(DEFAULT, TEXT_SIZE, 12);
+  // GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(RED));
 
   // -- Avatar Setup --
   Avatar avatar;
@@ -63,6 +65,7 @@ int main(void) {
 
   // -- Config State --
   bool dropdownOpen = false;
+  float applicationFontSize = config.applicationFontSize;
   float rmsThreshold = config.threshold;
   const float thresholdMin = 0.0f;
   const float thresholdMax = 5000.0f;
@@ -283,6 +286,8 @@ int main(void) {
       addHeight(rowHeight);
       addHeight(sectionHeight);
       addHeight(colorPickerHeight);
+      addHeight(sectionHeight);
+      addHeight(rowHeight);
       contentHeight += 10.0f;
 
       Rectangle content = {0.0f, 0.0f, configBounds.width - 20.0f,
@@ -548,6 +553,17 @@ int main(void) {
             ColorFromHSV(backgroundHsv.x, backgroundHsv.y, backgroundHsv.z);
         backgroundColor.a = prevAlpha;
         config.background = backgroundColor;
+        configDirty = true;
+      }
+
+      drawSection("Application");
+      Rectangle fontSizeRect = drawLabeled("Font Size (px)", rowHeight);
+      float prevFontSize = applicationFontSize;
+      GuiSliderBar(fontSizeRect, "", TextFormat("%d", applicationFontSize),
+                   &applicationFontSize, 8.0f, 32.0f);
+      if (applicationFontSize != prevFontSize) {
+        config.applicationFontSize = applicationFontSize;
+        GuiSetStyle(DEFAULT, TEXT_SIZE, applicationFontSize);
         configDirty = true;
       }
 

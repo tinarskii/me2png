@@ -25,6 +25,7 @@ struct AppConfig {
   float animationTalkShakeAmpX = 4.0f;
   float animationIdleShakeAmpY = 3.0f;
   float animationTalkShakeAmpY = 3.0f;
+  float applicationFontSize = 12.0f;
   Color background = {255, 255, 255, 255};
 };
 

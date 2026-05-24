@@ -250,6 +250,7 @@ bool LoadConfig(const char *path, AppConfig *config) {
   ReadFloatValue(data, "animationTalkShakeAmpY",
                  &config->animationTalkShakeAmpY);
   ReadColorValue(data, "backgroundColor", &config->background);
+  ReadFloatValue(data, "applicationFontSize", &config->applicationFontSize);
 
   std::string value;
   if (ReadStringValue(data, "imageIdle", &value)) {
@@ -281,6 +282,7 @@ bool SaveConfig(const char *path, const AppConfig &config) {
   }
 
   file << "{\n";
+  file << " \"applicationFontSize\": " << config.applicationFontSize << ",\n";
   file << "  \"threshold\": " << config.threshold << ",\n";
   file << "  \"blinkEnabled\": " << (config.blinkEnabled ? "true" : "false")
        << ",\n";
