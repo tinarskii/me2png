@@ -35,25 +35,25 @@ void Avatar::AutoScale() {
   }
 }
 
-void Avatar::Animation(AnimationState state) {
+void Avatar::AnimateWave(const AnimationWaveShakeParams &params) {
   float time = GetTime();
-  float bob = sinf(time * 2.0f) * 8.0f;
-  // NON UNIFORM SHAKING
-  float shakeX = sinf(time * 30.0f) * 4.0f;
-  float shakeY = cosf(time * 40.0f) * 3.0f;
+  float bobX = sinf(time * params.speed) * params.ampX;
+  float bobY = cosf(time * params.speed) * params.ampY;
 
-  switch (state) {
-  case NONE:
-    break;
-  case SHAKE:
-    position = {(GetScreenWidth() - rect.width * scale) / 2.0f + shakeX,
-                (GetScreenHeight() - rect.height * scale) / 2.0f + shakeY};
-    break;
-  case WAVE:
-    position = {(GetScreenWidth() - rect.width * scale) / 2.0f,
-                (GetScreenHeight() - rect.height * scale) / 2.0f + bob};
-    break;
+  position = {(GetScreenWidth() - rect.width * scale) / 2.0f + bobX,
+              (GetScreenHeight() - rect.height * scale) / 2.0f + bobY};
+}
+
+void Avatar::AnimationShake(const AnimationWaveShakeParams &params) {
+  double time = GetTime();
+  double interval = 1.0 / (params.speed * 20.0f);
+  if (time >= nextShakeTime) {
+    shakeOffsetX = (GetRandomValue(-100, 100) / 100.0f) * params.ampX;
+    shakeOffsetY = (GetRandomValue(-100, 100) / 100.0f) * params.ampY;
+    nextShakeTime = time + interval;
   }
+  position = {(GetScreenWidth() - rect.width * scale) / 2.0f + shakeOffsetX,
+              (GetScreenHeight() - rect.height * scale) / 2.0f + shakeOffsetY};
 }
 
 void Avatar::StopAnimation() {

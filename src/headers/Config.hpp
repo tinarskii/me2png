@@ -13,6 +13,18 @@ struct AppConfig {
   float blinkDuration = 0.12f;
   int idleAnimation = 1;
   int talkAnimation = 2;
+  float animationIdleWaveSpeed = 1.0f;
+  float animationTalkWaveSpeed = 1.0f;
+  float animationIdleWaveAmpX = 4.0f;
+  float animationTalkWaveAmpX = 4.0f;
+  float animationIdleWaveAmpY = 3.0f;
+  float animationTalkWaveAmpY = 3.0f;
+  float animationIdleShakeSpeed = 1.0f;
+  float animationTalkShakeSpeed = 1.0f;
+  float animationIdleShakeAmpX = 4.0f;
+  float animationTalkShakeAmpX = 4.0f;
+  float animationIdleShakeAmpY = 3.0f;
+  float animationTalkShakeAmpY = 3.0f;
   Color background = {255, 255, 255, 255};
 };
 

@@ -28,8 +28,8 @@ int main(void) {
   // -- Window Config --
   SetTraceLogLevel(LOG_ERROR);
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(1280, 720, "Me2PNG v0.1.0");
-  SetTargetFPS(144);
+  InitWindow(1280, 720, "Me2PNG v0.2.0");
+  SetTargetFPS(60);
 
   // -- Avatar Setup --
   Avatar avatar;
@@ -60,6 +60,8 @@ int main(void) {
       micText += ";";
     }
   }
+
+  // -- Config State --
   bool dropdownOpen = false;
   float rmsThreshold = config.threshold;
   const float thresholdMin = 0.0f;
@@ -78,8 +80,21 @@ int main(void) {
   Rectangle configView = {};
   bool idleAnimDropdownOpen = false;
   bool talkAnimDropdownOpen = false;
+  AnimationWaveShakeParams animationIdleWave = {config.animationIdleWaveSpeed,
+                                                config.animationIdleWaveAmpX,
+                                                config.animationIdleWaveAmpY};
+  AnimationWaveShakeParams animationIdleShake = {config.animationIdleShakeSpeed,
+                                                 config.animationIdleShakeAmpX,
+                                                 config.animationIdleShakeAmpY};
+  AnimationWaveShakeParams animationTalkWave = {config.animationTalkWaveSpeed,
+                                                config.animationTalkWaveAmpX,
+                                                config.animationTalkWaveAmpY};
+  AnimationWaveShakeParams animationTalkShake = {config.animationTalkShakeSpeed,
+                                                 config.animationTalkShakeAmpX,
+                                                 config.animationTalkShakeAmpY};
   bool configDirty = false;
 
+  // -- Clamp values --
   rmsThreshold = std::clamp(rmsThreshold, thresholdMin, thresholdMax);
   idleAnimationIndex = std::clamp(idleAnimationIndex, 0, 2);
   talkAnimationIndex = std::clamp(talkAnimationIndex, 0, 2);
@@ -97,6 +112,7 @@ int main(void) {
   double nextBlinkTime = 0.0;
   double talkEndTime = 0.0;
   const double talkHoldSeconds = 0.15;
+
   // -- Audio Input Setup --
   PaStream *audio_stream = nullptr;
   if (!microphones.empty()) {
@@ -116,6 +132,7 @@ int main(void) {
   avatar.AutoScale();
   avatar.StopAnimation();
   currentMode = SpriteMode::Idle;
+
   // -- Main Loop --
   while (!WindowShouldClose()) {
     float delta = GetFrameTime() * 144.0f;
@@ -189,10 +206,17 @@ int main(void) {
     Avatar::AnimationState animationState =
         isTalking ? AnimationFromIndex(talkAnimationIndex)
                   : AnimationFromIndex(idleAnimationIndex);
-    if (animationState == Avatar::NONE) {
+    switch (animationState) {
+    case Avatar::WAVE:
+      avatar.AnimateWave(isTalking ? animationTalkWave : animationIdleWave);
+      break;
+    case Avatar::SHAKE:
+      avatar.AnimationShake(isTalking ? animationTalkShake
+                                      : animationIdleShake);
+      break;
+    case Avatar::NONE:
       avatar.StopAnimation();
-    } else {
-      avatar.Animation(animationState);
+      break;
     }
     avatar.DrawSprite();
 
@@ -217,6 +241,10 @@ int main(void) {
 
       int dropdownSpacing = GuiGetStyle(DROPDOWNBOX, DROPDOWN_ITEMS_SPACING);
       int animationOptionCount = 3;
+      bool idleHasParams =
+          AnimationFromIndex(idleAnimationIndex) != Avatar::NONE;
+      bool talkHasParams =
+          AnimationFromIndex(talkAnimationIndex) != Avatar::NONE;
       float micDropdownOffset = dropdownOpen && !microphones.empty()
                                     ? static_cast<float>(microphones.size()) *
                                           (dropdownHeight + dropdownSpacing)
@@ -246,7 +274,13 @@ int main(void) {
       addHeight(rowHeight);
       addHeight(sectionHeight);
       addHeight(dropdownHeight + idleAnimDropdownOffset);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
       addHeight(dropdownHeight + talkAnimDropdownOffset);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
       addHeight(sectionHeight);
       addHeight(colorPickerHeight);
       contentHeight += 10.0f;
@@ -289,6 +323,35 @@ int main(void) {
                                  row.height};
         GuiLabel(labelRect, label);
         return controlRect;
+      };
+
+      auto drawAnimParams = [&](AnimationWaveShakeParams &params) {
+        Rectangle speed = drawLabeled("Speed (x)", rowHeight);
+        float prevSpeed = params.speed;
+        GuiSliderBar(speed, "", TextFormat("%.2f", params.speed), &params.speed,
+                     0.1f, 20.0f);
+        if (params.speed != prevSpeed) {
+          params.speed = std::max(0.1f, params.speed);
+          configDirty = true;
+        }
+
+        Rectangle ampX = drawLabeled("Amplitude X", rowHeight);
+        float prevAmpX = params.ampX;
+        GuiSliderBar(ampX, "", TextFormat("%.2f", params.ampX), &params.ampX,
+                     0.0f, 20.0f);
+        if (params.ampX != prevAmpX) {
+          params.ampX = std::max(0.0f, params.ampX);
+          configDirty = true;
+        }
+
+        Rectangle ampY = drawLabeled("Amplitude Y", rowHeight);
+        float prevAmpY = params.ampY;
+        GuiSliderBar(ampY, "", TextFormat("%.2f", params.ampY), &params.ampY,
+                     0.0f, 20.0f);
+        if (params.ampY != prevAmpY) {
+          params.ampY = std::max(0.0f, params.ampY);
+          configDirty = true;
+        }
       };
 
       drawSection("Audio");
@@ -421,6 +484,20 @@ int main(void) {
         configDirty = true;
       }
 
+      if (idleHasParams) {
+        AnimationWaveShakeParams &idleParams =
+            AnimationFromIndex(idleAnimationIndex) == Avatar::WAVE
+                ? animationIdleWave
+                : animationIdleShake;
+        drawAnimParams(idleParams);
+        config.animationIdleWaveSpeed = animationIdleWave.speed;
+        config.animationIdleWaveAmpX = animationIdleWave.ampX;
+        config.animationIdleWaveAmpY = animationIdleWave.ampY;
+        config.animationIdleShakeSpeed = animationIdleShake.speed;
+        config.animationIdleShakeAmpX = animationIdleShake.ampX;
+        config.animationIdleShakeAmpY = animationIdleShake.ampY;
+      }
+
       Rectangle talkAnimRect = drawLabeled("Talk", dropdownHeight);
       int prevTalkAnim = talkAnimationIndex;
       if (GuiDropdownBox(talkAnimRect, animationOptions, &talkAnimationIndex,
@@ -433,6 +510,20 @@ int main(void) {
       if (talkAnimationIndex != prevTalkAnim) {
         config.talkAnimation = talkAnimationIndex;
         configDirty = true;
+      }
+
+      if (talkHasParams) {
+        AnimationWaveShakeParams &talkParams =
+            AnimationFromIndex(talkAnimationIndex) == Avatar::WAVE
+                ? animationTalkWave
+                : animationTalkShake;
+        drawAnimParams(talkParams);
+        config.animationTalkWaveSpeed = animationTalkWave.speed;
+        config.animationTalkWaveAmpX = animationTalkWave.ampX;
+        config.animationTalkWaveAmpY = animationTalkWave.ampY;
+        config.animationTalkShakeSpeed = animationTalkShake.speed;
+        config.animationTalkShakeAmpX = animationTalkShake.ampX;
+        config.animationTalkShakeAmpY = animationTalkShake.ampY;
       }
 
       drawSection("Background");
@@ -490,7 +581,6 @@ int main(void) {
       configDirty = false;
     }
 
-    //     printf("Current RMS: %.2f\n", rmsValue);
     EndDrawing();
   }
 

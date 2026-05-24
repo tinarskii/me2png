@@ -206,8 +206,10 @@ AppConfig DefaultConfig() {
   const char *dataDir = DATADIR;
   std::snprintf(config.images.idle, kPathMax, "%s/assets/idle.png", dataDir);
   std::snprintf(config.images.talk, kPathMax, "%s/assets/talk.png", dataDir);
-  std::snprintf(config.images.blinkIdle, kPathMax, "%s/assets/blink-idle.png", dataDir);
-  std::snprintf(config.images.blinkTalk, kPathMax, "%s/assets/blink-talk.png", dataDir);
+  std::snprintf(config.images.blinkIdle, kPathMax, "%s/assets/blink-idle.png",
+                dataDir);
+  std::snprintf(config.images.blinkTalk, kPathMax, "%s/assets/blink-talk.png",
+                dataDir);
   return config;
 }
 
@@ -227,6 +229,26 @@ bool LoadConfig(const char *path, AppConfig *config) {
   ReadFloatValue(data, "blinkDuration", &config->blinkDuration);
   ReadIntValue(data, "idleAnimation", &config->idleAnimation);
   ReadIntValue(data, "talkAnimation", &config->talkAnimation);
+  ReadFloatValue(data, "animationIdleWaveSpeed",
+                 &config->animationIdleWaveSpeed);
+  ReadFloatValue(data, "animationTalkWaveSpeed",
+                 &config->animationTalkWaveSpeed);
+  ReadFloatValue(data, "animationIdleWaveAmpX", &config->animationIdleWaveAmpX);
+  ReadFloatValue(data, "animationTalkWaveAmpX", &config->animationTalkWaveAmpX);
+  ReadFloatValue(data, "animationIdleWaveAmpY", &config->animationIdleWaveAmpY);
+  ReadFloatValue(data, "animationTalkWaveAmpY", &config->animationTalkWaveAmpY);
+  ReadFloatValue(data, "animationIdleShakeSpeed",
+                 &config->animationIdleShakeSpeed);
+  ReadFloatValue(data, "animationTalkShakeSpeed",
+                 &config->animationTalkShakeSpeed);
+  ReadFloatValue(data, "animationIdleShakeAmpX",
+                 &config->animationIdleShakeAmpX);
+  ReadFloatValue(data, "animationTalkShakeAmpX",
+                 &config->animationTalkShakeAmpX);
+  ReadFloatValue(data, "animationIdleShakeAmpY",
+                 &config->animationIdleShakeAmpY);
+  ReadFloatValue(data, "animationTalkShakeAmpY",
+                 &config->animationTalkShakeAmpY);
   ReadColorValue(data, "backgroundColor", &config->background);
 
   std::string value;
@@ -267,6 +289,30 @@ bool SaveConfig(const char *path, const AppConfig &config) {
   file << "  \"blinkDuration\": " << config.blinkDuration << ",\n";
   file << "  \"idleAnimation\": " << config.idleAnimation << ",\n";
   file << "  \"talkAnimation\": " << config.talkAnimation << ",\n";
+  file << "  \"animationIdleWaveSpeed\": " << config.animationIdleWaveSpeed
+       << ",\n";
+  file << "  \"animationTalkWaveSpeed\": " << config.animationTalkWaveSpeed
+       << ",\n";
+  file << "  \"animationIdleWaveAmpX\": " << config.animationIdleWaveAmpX
+       << ",\n";
+  file << "  \"animationTalkWaveAmpX\": " << config.animationTalkWaveAmpX
+       << ",\n";
+  file << "  \"animationIdleWaveAmpY\": " << config.animationIdleWaveAmpY
+       << ",\n";
+  file << "  \"animationTalkWaveAmpY\": " << config.animationTalkWaveAmpY
+       << ",\n";
+  file << "  \"animationIdleShakeSpeed\": " << config.animationIdleShakeSpeed
+       << ",\n";
+  file << "  \"animationTalkShakeSpeed\": " << config.animationTalkShakeSpeed
+       << ",\n";
+  file << "  \"animationIdleShakeAmpX\": " << config.animationIdleShakeAmpX
+       << ",\n";
+  file << "  \"animationTalkShakeAmpX\": " << config.animationTalkShakeAmpX
+       << ",\n";
+  file << "  \"animationIdleShakeAmpY\": " << config.animationIdleShakeAmpY
+       << ",\n";
+  file << "  \"animationTalkShakeAmpY\": " << config.animationTalkShakeAmpY
+       << ",\n";
   file << "  \"backgroundColor\": [" << (int)config.background.r << ", "
        << (int)config.background.g << ", " << (int)config.background.b << ", "
        << (int)config.background.a << "],\n";
