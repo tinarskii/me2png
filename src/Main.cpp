@@ -99,6 +99,8 @@ int main(void) {
                                                  config.animationTalkShakeAmpX,
                                                  config.animationTalkShakeAmpY};
   bool configDirty = false;
+  float offsetX = 0.0f;
+  float offsetY = 0.0f;
 
   GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
 
@@ -230,6 +232,8 @@ int main(void) {
       avatar.StopAnimation();
       break;
     }
+    avatar.TranslateX(offsetX);
+    avatar.TranslateY(offsetY);
     avatar.DrawSprite();
 
     // -- Config Panel --
@@ -444,6 +448,15 @@ int main(void) {
       imagePicker.DrawRow(labelRect, buttonRect, valueRect, "Blink Talk",
                           SpriteMode::BlinkTalk);
 
+      Rectangle moveXRect = drawLabeled("Move X", rowHeight);
+      GuiSliderBar(moveXRect, "", TextFormat("%.2f", offsetX), &offsetX,
+                   -(GetScreenWidth() + avatar.rect.width),
+                   GetScreenWidth() + avatar.rect.width);
+      Rectangle moveYRect = drawLabeled("Move Y", rowHeight);
+      GuiSliderBar(moveYRect, "", TextFormat("%.2f", offsetY), &offsetY,
+                   -(GetScreenHeight() + avatar.rect.height),
+                   GetScreenHeight() + avatar.rect.height);
+
       drawSection("Blink");
       Rectangle blinkEnabledRect = drawLabeled("Enabled", rowHeight);
       bool blinkPrevious = blinkEnabled;
@@ -578,8 +591,8 @@ int main(void) {
 
       Rectangle autoscaleEnabledRect = drawLabeled("Autoscale", rowHeight);
       bool autoscalePrevious = autoscaleEnabled;
-      Rectangle checkboxAutoScaleRect = {autoscaleEnabledRect.x, autoscaleEnabledRect.y,
-                                rowHeight, rowHeight};
+      Rectangle checkboxAutoScaleRect = {
+          autoscaleEnabledRect.x, autoscaleEnabledRect.y, rowHeight, rowHeight};
       GuiCheckBox(checkboxAutoScaleRect, "", &autoscaleEnabled);
       if (autoscaleEnabled != autoscalePrevious) {
         config.autoscaleEnabled = autoscaleEnabled;

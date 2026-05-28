@@ -22,7 +22,7 @@ public:
   double nextShakeTime = 0.0;
   float shakeOffsetX = 0.0f;
   float shakeOffsetY = 0.0f;
-
+  
   void DrawSprite(void);
   void LoadSprite(const char *filename);
   void UnloadSprite(void);
@@ -30,4 +30,6 @@ public:
   void AnimateWave(const AnimationWaveShakeParams &params);
   void AnimationShake(const AnimationWaveShakeParams &params);
   void StopAnimation(void);
+  void TranslateX(float offset);
+  void TranslateY(float offset);
 };

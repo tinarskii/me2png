@@ -60,3 +60,6 @@ void Avatar::StopAnimation() {
   position = {(GetScreenWidth() - rect.width * scale) / 2.0f,
               (GetScreenHeight() - rect.height * scale) / 2.0f};
 }
+
+void Avatar::TranslateX(float offset) { position.x += offset; }
+void Avatar::TranslateY(float offset) { position.y += offset; }
