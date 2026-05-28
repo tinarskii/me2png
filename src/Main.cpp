@@ -32,7 +32,8 @@ int main(void) {
   SetTargetFPS(60);
   // GuiSetStyle(DEFAULT, TEXT_SIZE, 12);
   // GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(RED));
-  Font customFont = LoadFont("assets/DynaPuff.ttf");
+  std::string fontPath = std::string(DATADIR) + "/assets/DynaPuff.ttf";
+  Font customFont = LoadFont(fontPath.c_str());
   GuiSetFont(customFont);
 
   const char *configPath = "./config.json";
