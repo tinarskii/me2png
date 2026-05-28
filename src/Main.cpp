@@ -131,9 +131,6 @@ int main(void) {
                   microphones[micActive].c_str());
   }
   SetThreshold(rmsThreshold);
-  if (blinkMinSeconds > blinkMaxSeconds) {
-    std::swap(blinkMinSeconds, blinkMaxSeconds);
-  }
   nextBlinkTime = GetTime() + GetRandomValue((int)(blinkMinSeconds * 100.0f),
                                              (int)(blinkMaxSeconds * 100.0f)) /
                                   100.0f;
@@ -151,9 +148,6 @@ int main(void) {
       talkEndTime = now + talkHoldSeconds;
     }
     bool isTalking = now < talkEndTime;
-    if (blinkMinSeconds > blinkMaxSeconds) {
-      std::swap(blinkMinSeconds, blinkMaxSeconds);
-    }
     float blinkMin = std::max(0.1f, blinkMinSeconds);
     float blinkMax = std::max(blinkMin, blinkMaxSeconds);
     float blinkDurationSeconds = std::max(0.05f, blinkDuration);
@@ -492,7 +486,7 @@ int main(void) {
       Rectangle blinkMinRect = drawLabeled("Min (s)", rowHeight);
       float prevBlinkMin = blinkMinSeconds;
       GuiSliderBar(blinkMinRect, "", TextFormat("%.2f", blinkMinSeconds),
-                   &blinkMinSeconds, 0.1f, 10.0f);
+                   &blinkMinSeconds, 0.1f, blinkMaxSeconds);
       if (blinkMinSeconds != prevBlinkMin) {
         config.blinkMinSeconds = blinkMinSeconds;
         configDirty = true;
