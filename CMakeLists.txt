@@ -35,7 +35,7 @@ add_executable(
 )
 
 target_compile_definitions(me2png PRIVATE 
-  DATADIR="${CMAKE_INSTALL_PREFIX}/share/me2png"
+  DATADIR="/usr/share/me2png"
 )
 
 if(WIN32)
