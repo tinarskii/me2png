@@ -79,7 +79,7 @@ int main(void) {
   int idleAnimationIndex = config.idleAnimation;
   int talkAnimationIndex = config.talkAnimation;
   Color backgroundColor = config.background;
-  bool autoscaleEnabled = true;
+  bool autoscaleEnabled = config.autoscaleEnabled;
   Vector3 backgroundHsv = ColorToHSV(backgroundColor);
   bool configVisible = true;
   Vector2 configScroll = {0.0f, 0.0f};
@@ -99,8 +99,9 @@ int main(void) {
                                                  config.animationTalkShakeAmpX,
                                                  config.animationTalkShakeAmpY};
   bool configDirty = false;
-  float offsetX = 0.0f;
-  float offsetY = 0.0f;
+  float offsetX = config.offsetX;
+  float offsetY = config.offsetY;
+  float scale = config.scale;
 
   GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
 
@@ -139,7 +140,6 @@ int main(void) {
                                   100.0f;
 
   avatar.LoadSprite(imagePaths.idle);
-  avatar.AutoScale();
   avatar.StopAnimation();
   currentMode = SpriteMode::Idle;
 
@@ -211,7 +211,6 @@ int main(void) {
           avatar.UnloadSprite();
         }
         avatar.LoadSprite(nextPath);
-        avatar.AutoScale();
         avatar.StopAnimation();
         currentMode = desiredMode;
       }
@@ -234,6 +233,7 @@ int main(void) {
     }
     avatar.TranslateX(offsetX);
     avatar.TranslateY(offsetY);
+    avatar.scale = autoscaleEnabled ? avatar.scale : scale;
     avatar.DrawSprite();
 
     // -- Config Panel --
@@ -450,19 +450,34 @@ int main(void) {
                           SpriteMode::BlinkTalk);
 
       Rectangle moveXRect = drawLabeled("Move X", rowHeight);
+      float prevOffsetX = offsetX;
       GuiSliderBar(moveXRect, "", TextFormat("%.2f", offsetX), &offsetX,
                    -(GetScreenWidth() + avatar.rect.width),
                    GetScreenWidth() + avatar.rect.width);
+      if (offsetX != prevOffsetX) {
+        config.offsetX = offsetX;
+        configDirty = true;
+      }
       Rectangle moveYRect = drawLabeled("Move Y", rowHeight);
+      float prevOffsetY = offsetY;
       GuiSliderBar(moveYRect, "", TextFormat("%.2f", offsetY), &offsetY,
                    -(GetScreenHeight() + avatar.rect.height),
                    GetScreenHeight() + avatar.rect.height);
-      Rectangle scale = drawLabeled("Scale", rowHeight);
+      if (offsetY != prevOffsetY) {
+        config.offsetY = offsetY;
+        configDirty = true;
+      }
+      Rectangle scaleRect = drawLabeled("Scale", rowHeight);
+      float prevScale = scale;
       if (!autoscaleEnabled) {
-        GuiSliderBar(scale, "", TextFormat("%.2f", avatar.scale), &avatar.scale,
-                     0.1f, 10.0f);
+        GuiSliderBar(scaleRect, "", TextFormat("%.2f", avatar.scale),
+                     &avatar.scale, 0.1f, 10.0f);
       } else {
-        GuiLabel(scale, "Turn off autoscale to adjust");
+        GuiLabel(scaleRect, "Turn off autoscale to adjust");
+      }
+      if (avatar.scale != prevScale) {
+        config.scale = avatar.scale;
+        configDirty = true;
       }
 
       drawSection("Blink");

@@ -28,6 +28,9 @@ struct AppConfig {
   float applicationFontSize = 12.0f;
   Color background = {255, 255, 255, 255};
   bool autoscaleEnabled = true;
+  float offsetX = 0.0f;
+  float offsetY = 0.0f;
+  float scale = 1.0f;
 };
 
 AppConfig DefaultConfig();

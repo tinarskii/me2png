@@ -252,6 +252,9 @@ bool LoadConfig(const char *path, AppConfig *config) {
   ReadColorValue(data, "backgroundColor", &config->background);
   ReadFloatValue(data, "applicationFontSize", &config->applicationFontSize);
   ReadBoolValue(data, "autoscaleEnabled", &config->autoscaleEnabled);
+  ReadFloatValue(data, "offsetX", &config->offsetX);
+  ReadFloatValue(data, "offsetY", &config->offsetY);
+  ReadFloatValue(data, "scale", &config->scale);
 
   std::string value;
   if (ReadStringValue(data, "imageIdle", &value)) {
@@ -329,7 +332,10 @@ bool SaveConfig(const char *path, const AppConfig &config) {
   file << "  \"imageBlinkTalk\": \""
        << EscapeJsonString(config.images.blinkTalk) << "\",\n";
   file << "  \"autoscaleEnabled\": " << (config.autoscaleEnabled ? "true" : "false")
-       << "\n";
+       << ",\n";
+  file << "  \"offsetX\": " << config.offsetX << ",\n";
+  file << "  \"offsetY\": " << config.offsetY << ",\n";
+  file << "  \"scale\": " << config.scale << "\n";
   file << "}\n";
   return true;
 }
