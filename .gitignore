@@ -5,3 +5,4 @@ build*
 config.json
 portaudio-win/
 raylib-win/
+dist
