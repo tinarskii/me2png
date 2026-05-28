@@ -251,6 +251,7 @@ bool LoadConfig(const char *path, AppConfig *config) {
                  &config->animationTalkShakeAmpY);
   ReadColorValue(data, "backgroundColor", &config->background);
   ReadFloatValue(data, "applicationFontSize", &config->applicationFontSize);
+  ReadBoolValue(data, "autoscaleEnabled", &config->autoscaleEnabled);
 
   std::string value;
   if (ReadStringValue(data, "imageIdle", &value)) {
@@ -326,7 +327,9 @@ bool SaveConfig(const char *path, const AppConfig &config) {
   file << "  \"imageBlinkIdle\": \""
        << EscapeJsonString(config.images.blinkIdle) << "\",\n";
   file << "  \"imageBlinkTalk\": \""
-       << EscapeJsonString(config.images.blinkTalk) << "\"\n";
+       << EscapeJsonString(config.images.blinkTalk) << "\",\n";
+  file << "  \"autoscaleEnabled\": " << (config.autoscaleEnabled ? "true" : "false")
+       << "\n";
   file << "}\n";
   return true;
 }

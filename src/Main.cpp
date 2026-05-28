@@ -79,6 +79,7 @@ int main(void) {
   int idleAnimationIndex = config.idleAnimation;
   int talkAnimationIndex = config.talkAnimation;
   Color backgroundColor = config.background;
+  bool autoscaleEnabled = true;
   Vector3 backgroundHsv = ColorToHSV(backgroundColor);
   bool configVisible = true;
   Vector2 configScroll = {0.0f, 0.0f};
@@ -142,7 +143,7 @@ int main(void) {
 
   // -- Main Loop --
   while (!WindowShouldClose()) {
-    float delta = GetFrameTime() * 144.0f;
+    float delta = GetFrameTime() * 60.0f;
     double now = GetTime();
     float rmsValue = GetRMS();
     if (rmsValue >= rmsThreshold) {
@@ -165,6 +166,10 @@ int main(void) {
     }
     bool isBlinking = hasBlinkTextures && now < blinkEndTime;
     SpriteMode desiredMode = SpriteMode::Idle;
+
+    if (IsWindowResized() && autoscaleEnabled) {
+      avatar.AutoScale();
+    }
 
     BeginDrawing();
 
@@ -568,6 +573,16 @@ int main(void) {
       if (applicationFontSize != prevFontSize) {
         config.applicationFontSize = applicationFontSize;
         GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
+        configDirty = true;
+      }
+
+      Rectangle autoscaleEnabledRect = drawLabeled("Autoscale", rowHeight);
+      bool autoscalePrevious = autoscaleEnabled;
+      Rectangle checkboxAutoScaleRect = {autoscaleEnabledRect.x, autoscaleEnabledRect.y,
+                                rowHeight, rowHeight};
+      GuiCheckBox(checkboxAutoScaleRect, "", &autoscaleEnabled);
+      if (autoscaleEnabled != autoscalePrevious) {
+        config.autoscaleEnabled = autoscaleEnabled;
         configDirty = true;
       }
 
