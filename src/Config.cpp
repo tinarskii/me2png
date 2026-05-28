@@ -1,4 +1,5 @@
 #include "headers/Config.hpp"
+#include "headers/Utils.hpp"
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
@@ -203,13 +204,11 @@ std::string EscapeJsonString(const char *value) {
 
 AppConfig DefaultConfig() {
   AppConfig config;
-  const char *dataDir = DATADIR;
-  std::snprintf(config.images.idle, kPathMax, "%s/assets/idle.png", dataDir);
-  std::snprintf(config.images.talk, kPathMax, "%s/assets/talk.png", dataDir);
-  std::snprintf(config.images.blinkIdle, kPathMax, "%s/assets/blink-idle.png",
-                dataDir);
-  std::snprintf(config.images.blinkTalk, kPathMax, "%s/assets/blink-talk.png",
-                dataDir);
+  std::snprintf(config.images.idle, kPathMax, "%s",
+                AssetPath("idle.png").c_str());
+  std::snprintf(config.images.talk, kPathMax, "%s",
+                AssetPath("talk.png").c_str());
+  std::snprintf(config.micName, kPathMax, "%s", "");
   return config;
 }
 
@@ -331,8 +330,8 @@ bool SaveConfig(const char *path, const AppConfig &config) {
        << EscapeJsonString(config.images.blinkIdle) << "\",\n";
   file << "  \"imageBlinkTalk\": \""
        << EscapeJsonString(config.images.blinkTalk) << "\",\n";
-  file << "  \"autoscaleEnabled\": " << (config.autoscaleEnabled ? "true" : "false")
-       << ",\n";
+  file << "  \"autoscaleEnabled\": "
+       << (config.autoscaleEnabled ? "true" : "false") << ",\n";
   file << "  \"offsetX\": " << config.offsetX << ",\n";
   file << "  \"offsetY\": " << config.offsetY << ",\n";
   file << "  \"scale\": " << config.scale << "\n";

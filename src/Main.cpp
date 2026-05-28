@@ -3,6 +3,7 @@
 #include "headers/Config.hpp"
 #include "headers/ImagePicker.hpp"
 #include "headers/Microphone.hpp"
+#include "headers/Utils.hpp"
 #include "headers/raygui.h"
 #include "portaudio.h"
 #include <algorithm>
@@ -32,7 +33,7 @@ int main(void) {
   SetTargetFPS(60);
   // GuiSetStyle(DEFAULT, TEXT_SIZE, 12);
   // GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(RED));
-  std::string fontPath = std::string(DATADIR) + "/assets/DynaPuff.ttf";
+  std::string fontPath = AssetPath("DynaPuff.ttf");
   Font customFont = LoadFont(fontPath.c_str());
   GuiSetFont(customFont);
 
