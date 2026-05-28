@@ -1,13 +1,14 @@
 #include "headers/Utils.hpp"
-#include <string>
 #include <raylib.h>
+#include <string>
 
 std::string AssetPath(const std::string &path) {
+  std::string local = "assets/" + path;
+  if (FileExists(local.c_str()))
+    return local;
 #ifdef _WIN32
-  return "assets/" + path;
+  return local;
 #else
-  std::string installed = std::string(DATADIR) + "/assets/" + path;
-  if (FileExists(installed.c_str())) return installed;
-  return "assets/" + path;
+  return std::string(DATADIR) + "/assets/" + path;
 #endif
 }
