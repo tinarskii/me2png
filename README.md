@@ -41,7 +41,7 @@ or want to improve its UI, or increasing your GitHub karma, you sure can contrib
 
 ### Windows
 
-You can download the latest release from the [Release Page](https://github.com/tinarskii/me2png/releases), and extract the zip file. Then run `me2png.exe`.
+You can download the latest release from the [itch.io page](https://tinarskii.itch.io/me2png), and extract the zip file. Then run `me2png.exe`.
 
 ### Linux / MacOS
 
@@ -49,7 +49,7 @@ You can download the latest release from the [Release Page](https://github.com/t
 
 **Arch Linux**: You can install from the AUR. Run `yay -S me2png`, or `paru -S me2png`. See [AUR Page](https://aur.archlinux.org/packages/me2png/) for more details.
 
-**Other Linux Distros / MacOS**: You can download the latest release from the [Release Page](https://github.com/tinarskii/me2png/releases), extract the tar.gz file, and run `./me2png`.
+**Other Linux Distros / MacOS**: You can download the latest release from the [itch.io page](https://tinarskii.itch.io/me2png), extract the tar.gz file, and run `./me2png`.
 
 ### Universal
 
