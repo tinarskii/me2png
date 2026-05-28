@@ -32,6 +32,7 @@ add_executable(
   src/Config.cpp
   src/ImagePicker.cpp
   src/Microphone.cpp
+  src/Utils.cpp
 )
 
 target_compile_definitions(me2png PRIVATE 
