@@ -277,6 +277,9 @@ int main(void) {
       addHeight(rowHeight);
       addHeight(rowHeight);
       addHeight(rowHeight);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
+      addHeight(rowHeight);
       addHeight(sectionHeight);
       addHeight(rowHeight);
       addHeight(rowHeight);
