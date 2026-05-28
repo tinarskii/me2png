@@ -293,6 +293,7 @@ int main(void) {
       addHeight(rowHeight);
       addHeight(rowHeight);
       addHeight(rowHeight);
+      addHeight(rowHeight);
       addHeight(dropdownHeight + talkAnimDropdownOffset);
       addHeight(rowHeight);
       addHeight(rowHeight);
@@ -456,6 +457,13 @@ int main(void) {
       GuiSliderBar(moveYRect, "", TextFormat("%.2f", offsetY), &offsetY,
                    -(GetScreenHeight() + avatar.rect.height),
                    GetScreenHeight() + avatar.rect.height);
+      Rectangle scale = drawLabeled("Scale", rowHeight);
+      if (!autoscaleEnabled) {
+        GuiSliderBar(scale, "", TextFormat("%.2f", avatar.scale), &avatar.scale,
+                     0.1f, 10.0f);
+      } else {
+        GuiLabel(scale, "Turn off autoscale to adjust");
+      }
 
       drawSection("Blink");
       Rectangle blinkEnabledRect = drawLabeled("Enabled", rowHeight);
