@@ -35,10 +35,6 @@ int main(void) {
   Font customFont = LoadFont("assets/DynaPuff.ttf");
   GuiSetFont(customFont);
 
-  // -- Avatar Setup --
-  Avatar avatar;
-  avatar.scale = 1.0f;
-
   const char *configPath = "./config.json";
   AppConfig config = DefaultConfig();
   LoadConfig(configPath, &config);
@@ -103,6 +99,9 @@ int main(void) {
   float offsetY = config.offsetY;
   float scale = config.scale;
 
+  // -- Avatar Setup --
+  Avatar avatar;
+  avatar.scale = autoscaleEnabled ? 1.0f : scale;
   GuiSetStyle(DEFAULT, TEXT_SIZE, (int)applicationFontSize);
 
   // -- Clamp values --
@@ -233,7 +232,6 @@ int main(void) {
     }
     avatar.TranslateX(offsetX);
     avatar.TranslateY(offsetY);
-    avatar.scale = autoscaleEnabled ? avatar.scale : scale;
     avatar.DrawSprite();
 
     // -- Config Panel --
